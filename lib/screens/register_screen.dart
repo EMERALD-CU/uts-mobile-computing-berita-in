@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import 'home_screen.dart';
+import '../data/app_data.dart';
 
 class RegisterScreen extends StatefulWidget {
   final String email;
@@ -231,6 +232,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ElevatedButton(
                   onPressed: _isAgreed ? () {
                     if (_formKey.currentState!.validate()) {
+                      final email = _emailController.text.trim();
+                      String name = email.split('@')[0];
+                      name = name.isNotEmpty ? name[0].toUpperCase() + name.substring(1) : 'Pengguna';
+
+                      AppData.savedAccounts.add({
+                        'name': name,
+                        'email': email,
+                        'initial': name[0].toUpperCase(),
+                        'color': 0xFF2196F3, 
+                      });
+
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => const HomeScreen()),

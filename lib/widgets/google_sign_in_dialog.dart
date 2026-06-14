@@ -1,9 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
-// Import halaman tujuan
 import '../screens/home_screen.dart';
 import '../screens/register_screen.dart';
+import '../data/app_data.dart';
 
 void showGoogleSignInDialog(BuildContext context) {
   showDialog(
@@ -35,25 +35,16 @@ void showGoogleSignInDialog(BuildContext context) {
                 const SizedBox(height: 24),
 
                 // Akun 1 -> Masuk ke Home Page
-                ListTile(
-                  leading: const CircleAvatar(backgroundColor: Colors.green, child: Text('M', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
-                  title: const Text('Emerald Alphante Reirezqi', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                  subtitle: const Text('emeraldalphanter@gmail.com', style: TextStyle(fontSize: 12)),
-                  onTap: () {
-                    // PushAndRemoveUntil digunakan agar user tidak bisa 'back' kembali ke halaman login
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen()),
-                      (route) => false,
-                    );
-                  },
-                ),
-
-                // Akun 2 -> Masuk ke Home Page
-                ListTile(
-                  leading: const CircleAvatar(backgroundColor: Colors.amber, child: Text('A', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))),
-                  title: const Text('Akun anonim', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                  subtitle: const Text('anonimus12@gmail.com', style: TextStyle(fontSize: 12)),
+                // Render akun dinamis dari AppData
+              ...AppData.savedAccounts.map((account) {
+                return ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: CircleAvatar(
+                    backgroundColor: Color(account['color']),
+                    child: Text(account['initial'], style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  ),
+                  title: Text(account['name'], style: const TextStyle(fontWeight: FontWeight.bold)),
+                  subtitle: Text(account['email']),
                   onTap: () {
                     Navigator.pushAndRemoveUntil(
                       context,
@@ -61,7 +52,8 @@ void showGoogleSignInDialog(BuildContext context) {
                       (route) => false,
                     );
                   },
-                ),
+                );
+              }).toList(),
                 
                 const SizedBox(height: 8),
                 

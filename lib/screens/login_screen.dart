@@ -4,6 +4,7 @@ import '../widgets/custom_text_field.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/google_sign_in_dialog.dart'; 
 import 'register_screen.dart';
+import '../data/app_data.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -15,17 +16,20 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
+  String _currentEmail = '';
 
-  void _submitForm() {
+void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      // Navigasi ke Register Email
+      final email = _currentEmail.trim();
+      
+      // Simpan riwayat email
+      if (email.isNotEmpty && !AppData.emailHistory.contains(email)) {
+        AppData.emailHistory.add(email);
+      }
+
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => RegisterScreen(
-            email: _emailController.text,
-          ),
-        ),
+        MaterialPageRoute(builder: (context) => RegisterScreen(email: email)),
       );
     }
   }
@@ -129,14 +133,34 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 8),
 
-                CustomTextField(
-                  controller: _emailController,
-                  hintText: 'Masukan email akun anda',
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) return 'Email tidak boleh kosong';
-                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return 'Format email tidak valid';
-                    return null;
+                Autocomplete<String>(
+                  optionsBuilder: (TextEditingValue textEditingValue) {
+                    if (textEditingValue.text == '') return const Iterable<String>.empty();
+                    return AppData.emailHistory.where((String option) => 
+                      option.toLowerCase().contains(textEditingValue.text.toLowerCase()));
+                  },
+                  onSelected: (String selection) {
+                    _currentEmail = selection;
+                  },
+                  fieldViewBuilder: (context, controller, focusNode, onEditingComplete) {
+                    return TextFormField(
+                      controller: controller,
+                      focusNode: focusNode,
+                      keyboardType: TextInputType.emailAddress,
+                      onChanged: (value) => _currentEmail = value,
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) return 'Email tidak boleh kosong';
+                        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return 'Format email tidak valid';
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Masukan email akun anda',
+                        hintStyle: const TextStyle(color: Colors.black54),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: const BorderSide(color: Colors.black87)),
+                        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: const BorderSide(color: Colors.black)),
+                      ),
+                    );
                   },
                 ),
                 const SizedBox(height: 24),
