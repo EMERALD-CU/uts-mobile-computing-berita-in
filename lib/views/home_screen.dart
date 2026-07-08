@@ -3,6 +3,11 @@ import '../theme/app_colors.dart';
 import 'login_screen.dart';
 import 'harian_page.dart';
 import '../services/auth_service.dart';
+import 'package:provider/provider.dart';
+import '../viewmodels/news_viewmodel.dart';
+import 'article_detail_screen.dart';
+import '../services/api_service.dart';
+import '../models/article_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,81 +24,112 @@ class _HomeScreenState extends State<HomeScreen> {
     'Beranda', 'Politik', 'Hukum', 'Ekonomi', 'Lingkungan', 'Teknologi', 'Olahraga', 'Hiburan'
   ];
 
-  Widget _buildArticleCard(String title) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16.0),
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFCEAE8), 
-        borderRadius: BorderRadius.circular(4),
-        boxShadow: [
-          BoxShadow(color: Colors.grey.withOpacity(0.2), spreadRadius: 1, blurRadius: 4, offset: const Offset(0, 2)),
-        ],
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 100, height: 100,
-            decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(4)),
-            child: const Icon(Icons.image, color: Colors.grey, size: 40),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              title,
-              style: const TextStyle(fontSize: 16, color: Colors.black87, height: 1.4),
-              maxLines: 4, overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Widget Konten Beranda (Ada Artikel)
+// Widget Konten Beranda (Ada Artikel dari API)
   Widget _buildBerandaContent() {
     return Expanded(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('ARTIKEL TERBARU', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
-            const SizedBox(height: 16),
-            _buildArticleCard('4 Tentara Penyiram Air Keras ke Andrie Yunus Dituntut 2,5 Tahun Penjara'),
-            _buildArticleCard('VCGamers Jadi Rumah bagi 25 Ribu Pelaku UMKM Digital di Indonesia'),
-            _buildArticleCard('Perunding AS-Iran Sepakat Gencatan Snjata 60 Hari'),
-            
-            const SizedBox(height: 24),
-            
-            const Text('ARTIKEL TRENDING', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
-            const SizedBox(height: 16),
-            _buildArticleCard('Makan Bergizi Masuk Sisdiknas'),
-            _buildArticleCard('PPPK paruh waktu diperpanjang hingga tahun depan, gaji setara UMP'),
-            _buildArticleCard('Babak Kedua Rangsangan Ekonomi'),
-          ],
-        ),
-      ),
-    );
-  }
+      child: Consumer<NewsViewModel>(
+        builder: (context, viewModel, child) {
+          // 1. Tampilkan loading warna merah khas aplikasi Anda
+          if (viewModel.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(color: AppColors.primaryRed),
+            );
+          }
 
-  // Widget Konten Kosong
-  Widget _buildEmptyCategoryContent(String categoryName) {
-    return Expanded(
-      child: Container(
-        color: Colors.white, 
-        width: double.infinity,
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'ARTIKEL $categoryName',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+          // 2. Tampilkan pesan error jika internet mati
+          if (viewModel.errorMessage.isNotEmpty) {
+            return Center(child: Text(viewModel.errorMessage));
+          }
+
+          // 3. Tampilkan pesan jika berita kosong
+          if (viewModel.articles.isEmpty) {
+            return const Center(child: Text('Belum ada berita hari ini.'));
+          }
+
+          // 4. Render tampilan berita API dengan desain orisinal Anda
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'ARTIKEL ${_selectedCategoryIndex == 0 ? "TERBARU" : _categories[_selectedCategoryIndex].toUpperCase()}', 
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)
+                ),
+                const SizedBox(height: 16),
+                
+                // Looping data berita dari internet
+                ListView.builder(
+                  shrinkWrap: true, // Wajib agar tidak bentrok dengan SingleChildScrollView
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: viewModel.articles.length,
+                  itemBuilder: (context, index) {
+                    final article = viewModel.articles[index];
+                    
+                    return GestureDetector(
+                      onTap: () {
+                        // Perintah untuk pindah halaman dengan membawa data 'article'
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ArticleDetailScreen(article: article),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 16.0),
+                        padding: const EdgeInsets.all(12.0),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFCEAE8), 
+                          borderRadius: BorderRadius.circular(4),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2), 
+                              spreadRadius: 1, 
+                              blurRadius: 4, 
+                              offset: const Offset(0, 2)
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Gambar Artikel dari Internet
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(4),
+                              child: Image.network(
+                                article.imageUrl,
+                                width: 100, 
+                                height: 100,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) => Container(
+                                  width: 100, 
+                                  height: 100,
+                                  color: Colors.grey.shade300,
+                                  child: const Icon(Icons.image, color: Colors.grey, size: 40),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            // Judul Artikel
+                            Expanded(
+                              child: Text(
+                                article.title,
+                                style: const TextStyle(fontSize: 16, color: Colors.black87, height: 1.4),
+                                maxLines: 4, 
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -121,6 +157,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           setState(() {
                             _selectedCategoryIndex = i; 
                           });
+                          Provider.of<NewsViewModel>(context, listen: false)
+                              .fetchTopNews(category: _categories[i]);
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(right: 24.0),
@@ -177,10 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         
-        if (_selectedCategoryIndex == 0)
-          _buildBerandaContent() 
-        else
-          _buildEmptyCategoryContent(_categories[_selectedCategoryIndex].toUpperCase()), 
+        _buildBerandaContent(),
       ],
     );
   }
@@ -193,6 +228,15 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       return const Center(child: Text('Halaman Berita.in Plus (Segera Hadir)'));
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Perintah untuk memanggil API News segera setelah layar selesai digambar
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<NewsViewModel>(context, listen: false).fetchTopNews();
+    });
   }
 
   @override
@@ -222,7 +266,16 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
             },
           ),
-          IconButton(icon: const Icon(Icons.search, color: Colors.black), onPressed: () {}),
+          IconButton(
+            icon: const Icon(Icons.search, color: Colors.black), 
+            onPressed: () {
+              // Membuka halaman overlay pencarian bawaan Flutter
+              showSearch(
+                context: context,
+                delegate: NewsSearchDelegate(),
+              );
+            },
+          ),
           const SizedBox(width: 8),
         ],
       ),
@@ -245,6 +298,137 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.access_time), label: 'Harian'),
           BottomNavigationBarItem(icon: Icon(Icons.bento_outlined), label: 'Berita.in Plus'),
         ],
+      ),
+    );
+  }
+}
+// --- CLASS BARU UNTUK MENANGANI PENCARIAN ---
+class NewsSearchDelegate extends SearchDelegate {
+  
+  // 1. Tombol aksi di sebelah kanan (Tombol Clear/Hapus teks)
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear, color: Colors.black),
+        onPressed: () {
+          query = ''; // Mengosongkan kolom ketik pencarian
+        },
+      ),
+    ];
+  }
+
+  // 2. Tombol aksi di sebelah kiri (Tombol Kembali)
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back, color: Colors.black),
+      onPressed: () {
+        close(context, null); // Menutup halaman pencarian
+      },
+    );
+  }
+
+  // 3. Tampilan saat user menekan tombol "Search" di keyboard HP
+  @override
+  Widget buildResults(BuildContext context) {
+    if (query.trim().isEmpty) {
+      return const Center(child: Text('Ketik kata kunci pencarian...'));
+    }
+
+    return FutureBuilder<List<Article>>(
+      future: ApiService().fetchNews(query), // Mencari berita berdasarkan teks 'query'
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(color: Colors.red),
+          );
+        }
+        
+        if (snapshot.hasError) {
+          return const Center(child: Text('Gagal memuat hasil pencarian.'));
+        }
+
+        final articles = snapshot.data ?? [];
+        if (articles.isEmpty) {
+          return const Center(child: Text('Berita tidak ditemukan.'));
+        }
+
+        // Tampilkan daftar hasil pencarian
+        return ListView.builder(
+          padding: const EdgeInsets.all(16.0),
+          itemCount: articles.length,
+          itemBuilder: (context, index) {
+            final article = articles[index];
+            
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ArticleDetailScreen(article: article),
+                  ),
+                );
+              },
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 16.0),
+                padding: const EdgeInsets.all(12.0),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFCEAE8), 
+                  borderRadius: BorderRadius.circular(4),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2), 
+                      spreadRadius: 1, 
+                      blurRadius: 4, 
+                      offset: const Offset(0, 2)
+                    ),
+                  ],
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: Image.network(
+                        article.imageUrl,
+                        width: 100, 
+                        height: 100,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) => Container(
+                          width: 100, 
+                          height: 100,
+                          color: Colors.grey.shade300,
+                          child: const Icon(Icons.image, color: Colors.grey, size: 40),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Text(
+                        article.title,
+                        style: const TextStyle(fontSize: 16, color: Colors.black87, height: 1.4),
+                        maxLines: 4, 
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  // 4. Tampilan rekomendasi saat user baru mulai mengetik
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return const Center(
+      child: Text(
+        'Cari berita terbaru di BERITA.IN...',
+        style: TextStyle(color: Colors.grey),
       ),
     );
   }

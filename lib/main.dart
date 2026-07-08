@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'views/login_screen.dart'; 
 import 'views/home_screen.dart';
 import 'services/auth_service.dart';
+import 'package:provider/provider.dart';
+import 'viewmodels/news_viewmodel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,14 +18,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Berita.in',
-      debugShowCheckedModeBanner: false, // Menghilangkan banner debug
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        fontFamily: 'Roboto', 
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => NewsViewModel()),
+      ],
+      child: MaterialApp(
+        title: 'BERITA.IN',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'Roboto',
+          primarySwatch: Colors.red,
+        ),
+        home: isLoggedIn ? const HomeScreen() : const LoginScreen(),
       ),
-      home: isLoggedIn ? const HomeScreen() : const LoginScreen(),
     );
   }
 }
