@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import 'login_screen.dart';
-import 'harian_page.dart'; 
+import 'harian_page.dart';
+import '../services/auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -206,7 +207,6 @@ class _HomeScreenState extends State<HomeScreen> {
           'BERITA.IN',
           style: TextStyle(fontFamily: 'Gagalin', color: AppColors.primaryRed, fontSize: 30, fontWeight: FontWeight.w900, letterSpacing: 1.0),
         ),
-        // REVISI UTAMA: Garis pemisah antara kontainer BERITA.IN (AppBar) dengan kategori dibuat lebih tegas
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1.0),
           child: Container(
@@ -217,7 +217,8 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.person_outline, color: Colors.black), 
-            onPressed: () {
+            onPressed: () async {
+              await AuthService.logout();
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
             },
           ),

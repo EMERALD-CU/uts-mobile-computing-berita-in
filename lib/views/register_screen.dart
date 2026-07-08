@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import 'home_screen.dart';
 import '../data/app_data.dart';
+import '../services/auth_service.dart';
 
 class RegisterScreen extends StatefulWidget {
   final String email;
@@ -230,18 +231,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 32),
 
                 ElevatedButton(
-                  onPressed: _isAgreed ? () {
+                  onPressed: _isAgreed ? () async {
                     if (_formKey.currentState!.validate()) {
                       final email = _emailController.text.trim();
                       String name = email.split('@')[0];
                       name = name.isNotEmpty ? name[0].toUpperCase() + name.substring(1) : 'Pengguna';
 
-                      AppData.savedAccounts.add({
-                        'name': name,
-                        'email': email,
-                        'initial': name[0].toUpperCase(),
-                        'color': 0xFF2196F3, 
-                      });
+                      bool isAccountExists = AppData.savedAccounts.any((acc) => acc['email'] == email);
+                      if (!isAccountExists) {
+                       AppData.savedAccounts.add({
+                         'name': name,
+                         'email': email,
+                         'initial': name[0].toUpperCase(),
+                         'color': 0xFF2196F3, 
+                        });
+                      }
+
+                      await AuthService.saveLoginStatus(true, email); // Simpan status login dan email ke memori lokal
 
                       Navigator.pushAndRemoveUntil(
                         context,

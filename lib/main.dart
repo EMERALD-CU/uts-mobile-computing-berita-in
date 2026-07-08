@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import 'views/login_screen.dart'; // Sesuaikan dengan path folder kamu
+import 'views/login_screen.dart'; 
+import 'views/home_screen.dart';
+import 'services/auth_service.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  bool isLoggedIn = await AuthService.checkLoginStatus();
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool isLoggedIn;
+  
+  const MyApp({Key? key, required this.isLoggedIn}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +21,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false, // Menghilangkan banner debug
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
-        fontFamily: 'Roboto', // Bisa disesuaikan jika kamu pakai font khusus di Figma
+        fontFamily: 'Roboto', 
       ),
-      home: const LoginScreen(), // Mengarahkan langsung ke halaman Login
+      home: isLoggedIn ? const HomeScreen() : const LoginScreen(),
     );
   }
 }

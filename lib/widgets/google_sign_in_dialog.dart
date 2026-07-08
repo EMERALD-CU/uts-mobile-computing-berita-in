@@ -4,6 +4,7 @@ import '../theme/app_colors.dart';
 import '../views/home_screen.dart';
 import '../views/register_screen.dart';
 import '../data/app_data.dart';
+import '../services/auth_service.dart';
 
 void showGoogleSignInDialog(BuildContext context) {
   showDialog(
@@ -45,7 +46,9 @@ void showGoogleSignInDialog(BuildContext context) {
                   ),
                   title: Text(account['name'], style: const TextStyle(fontWeight: FontWeight.bold)),
                   subtitle: Text(account['email']),
-                  onTap: () {
+                  onTap: () async {
+                    await AuthService.saveLoginStatus(true, account['email']); // Simpan status login dan email ke memori lokal
+
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => const HomeScreen()),
