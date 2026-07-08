@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
-import '../screens/home_screen.dart';
-import '../screens/register_screen.dart';
+import '../views/home_screen.dart';
+import '../views/register_screen.dart';
 import '../data/app_data.dart';
 
 void showGoogleSignInDialog(BuildContext context) {

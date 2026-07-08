@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart'; // Sesuaikan dengan path folder kamu
+import 'views/login_screen.dart'; // Sesuaikan dengan path folder kamu
 
 void main() {
   runApp(const MyApp());
