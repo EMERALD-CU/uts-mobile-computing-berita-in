@@ -5,10 +5,14 @@ import '../models/article_model.dart';
 class ApiService {
   static const String _apiKey = '7d581a0ff77441fb831259546364c6df'; 
 
-  Future<List<Article>> fetchNews(String query) async {
+  Future<List<Article>> fetchNews(String query, {String? date}) async {
     try {
-      // URL akan otomatis berubah sesuai kata kunci pencarian (query)
-      final String url = 'https://newsapi.org/v2/everything?q=$query&language=id&sortBy=publishedAt&apiKey=$_apiKey';
+      String url = 'https://newsapi.org/v2/everything?q=$query&language=id&sortBy=publishedAt&apiKey=$_apiKey';
+      
+      // Jika kalender diklik (ada tanggalnya), selipkan filter ke dalam URL
+      if (date != null && date.isNotEmpty) {
+        url += '&from=$date&to=$date';
+      }
       
       final response = await http.get(Uri.parse(url));
 

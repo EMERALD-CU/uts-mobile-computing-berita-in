@@ -16,18 +16,16 @@ class NewsViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String get errorMessage => _errorMessage;
 
-  Future<void> fetchTopNews({String category = 'Indonesia'}) async {
+  Future<void> fetchTopNews({String category = 'Indonesia', String? date}) async {
     _isLoading = true;
     _errorMessage = '';
     notifyListeners();
 
     try {
-      // Jika yang diklik adalah 'Beranda', cari berita umum (Indonesia).
-      // Jika bukan, cari sesuai nama kategorinya (misal: 'Politik', 'Hukum')
       String searchQuery = (category == 'Beranda') ? 'Indonesia' : category;
       
-      // Kirim kata kunci ke ApiService
-      _articles = await _apiService.fetchNews(searchQuery);
+      // Menambahkan date: date agar diteruskan ke mesin API
+      _articles = await _apiService.fetchNews(searchQuery, date: date);
     } catch (e) {
       _errorMessage = 'Gagal mengambil berita. Pastikan internet Anda aktif.';
     } finally {
