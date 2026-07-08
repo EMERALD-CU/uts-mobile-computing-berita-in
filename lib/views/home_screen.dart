@@ -1,3 +1,4 @@
+import 'plus_page.dart';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import 'login_screen.dart';
@@ -226,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else if (_selectedIndex == 1) {
       return const HarianPage();
     } else {
-      return const Center(child: Text('Halaman Berita.in Plus (Segera Hadir)'));
+      return const PlusPage();
     }
   }
 

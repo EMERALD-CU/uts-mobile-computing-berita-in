@@ -17,6 +17,7 @@ dependencies:
   provider: ^6.1.2             # Untuk State Management
   shared_preferences: ^2.2.3   # Untuk Local Storage (Status Login)
   http: ^1.2.1                 # Untuk Integrasi REST API News
+  image_picker: ^1.2.3
 
 dev_dependencies:
   flutter_test:

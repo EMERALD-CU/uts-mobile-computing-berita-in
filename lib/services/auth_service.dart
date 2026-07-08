@@ -18,7 +18,13 @@ class AuthService {
     return prefs.getBool(_loginKey) ?? false; // Jika belum pernah login, kembalikan 'false'
   }
 
-  // 3. Fungsi untuk MENGHAPUS status login (Dipanggil saat user klik Logout)
+  // 3. Fungsi ini untuk MENGAMBIL email yang sedang login
+  static Future<String?> getUserEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_emailKey); // Mengembalikan email atau null jika tidak ada
+  }
+
+  // 4. Fungsi untuk MENGHAPUS status login (Dipanggil saat user klik Logout)
   static Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_loginKey);
