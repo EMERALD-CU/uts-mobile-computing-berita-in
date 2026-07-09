@@ -34,3 +34,6 @@ flutter:
     - family: Gagalin
       fonts:
         - asset: lib/assets/fonts/Gagalin-Regular.otf
+  assets:
+    - lib/assets/images/logo_b.jpeg
+    - lib/assets/images/logo_b_grey.jpeg

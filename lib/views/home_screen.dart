@@ -294,10 +294,13 @@ class _HomeScreenState extends State<HomeScreen> {
             _selectedIndex = index; 
           });
         },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: 'Beranda'),
-          BottomNavigationBarItem(icon: Icon(Icons.access_time), label: 'Harian'),
-          BottomNavigationBarItem(icon: Icon(Icons.bento_outlined), label: 'Berita.in Plus'),
+        items: [
+           const BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: 'Beranda'),
+           const BottomNavigationBarItem(icon: Icon(Icons.access_time), label: 'Harian'),
+          BottomNavigationBarItem(
+            icon: Image.asset('lib/assets/images/logo_b_grey.jpeg',  width: 20, height: 20, fit: BoxFit.cover),
+            activeIcon: Image.asset('lib/assets/images/logo_b.jpeg',  width: 20, height: 20, fit: BoxFit.cover),
+            label: 'Berita.in Plus'),
         ],
       ),
     );
