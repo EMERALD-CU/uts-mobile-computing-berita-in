@@ -30,9 +30,9 @@ void showGoogleSignInDialog(BuildContext context) {
                     fit: BoxFit.cover,
                   ),
                   const SizedBox(height: 16),
-                  const Text('Pilih akun', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)),
+                  const Text('Pilih akun', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
                   const SizedBox(height: 4),
-                  const Text('untuk melanjutkan ke BERITA.IN', style: TextStyle(fontSize: 14, color: Colors.black54)),
+                  const Text('untuk melanjutkan ke BERITA.IN', style: TextStyle(fontSize: 12, color: Colors.black54)),
                   const SizedBox(height: 24),
             
                   // Akun 1 -> Masuk ke Home Page
@@ -44,8 +44,8 @@ void showGoogleSignInDialog(BuildContext context) {
                       backgroundColor: Color(account['color']),
                       child: Text(account['initial'], style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                     ),
-                    title: Text(account['name'], style: const TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(account['email']),
+                    title: Text(account['name'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                    subtitle: Text(account['email'], style: const TextStyle(fontSize: 12)),
                     onTap: () async {
                       await AuthService.saveLoginStatus(true, account['email']); // Simpan status login dan email ke memori lokal
             
@@ -63,7 +63,7 @@ void showGoogleSignInDialog(BuildContext context) {
                   // Tambahkan Akun -> Masuk ke Register Page
                   ListTile(
                     leading: const Icon(Icons.person_add_alt_1, color: Colors.black87),
-                    title: const Text('Tambahkan akun lain', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black87)),
+                    title: const Text('Tambahkan akun lain', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.black87)),
                     onTap: () {
                       Navigator.pop(context); // Tutup dialog dulu
                       // Buka halaman Register dengan email kosong

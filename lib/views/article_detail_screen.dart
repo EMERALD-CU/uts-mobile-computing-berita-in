@@ -54,7 +54,7 @@ class ArticleDetailScreen extends StatelessWidget {
                   Text(
                     article.title,
                     style: const TextStyle(
-                      fontSize: 22, 
+                      fontSize: 20, 
                       fontWeight: FontWeight.bold, 
                       color: Colors.black87,
                       height: 1.3,
@@ -70,7 +70,7 @@ class ArticleDetailScreen extends StatelessWidget {
                   Text(
                     article.description,
                     style: TextStyle(
-                      fontSize: 16, 
+                      fontSize: 14, 
                       fontStyle: FontStyle.italic, 
                       color: Colors.grey.shade700,
                       height: 1.5,
@@ -82,7 +82,7 @@ class ArticleDetailScreen extends StatelessWidget {
                   Text(
                     article.content,
                     style: const TextStyle(
-                      fontSize: 16, 
+                      fontSize: 14, 
                       color: Colors.black, 
                       height: 1.6,
                     ),

@@ -98,7 +98,7 @@ class _HarianPageState extends State<HarianPage> {
                 children: [
                   Text(
                     _formatTanggal(_selectedDate),
-                    style: const TextStyle(fontSize: 16, color: Colors.black87),
+                    style: const TextStyle(fontSize: 14, color: Colors.black87),
                   ),
                   const Icon(Icons.calendar_today_outlined, color: Colors.grey, size: 20),
                 ],
@@ -185,7 +185,7 @@ class _HarianPageState extends State<HarianPage> {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black87,
                                 height: 1.4,

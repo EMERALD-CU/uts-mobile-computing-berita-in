@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         title: 'BERITA.IN',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          fontFamily: 'Roboto',
+          fontFamily: 'serif',
           primarySwatch: Colors.red,
         ),
         home: isLoggedIn ? const HomeScreen() : const LoginScreen(),

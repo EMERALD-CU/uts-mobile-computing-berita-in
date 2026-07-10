@@ -82,7 +82,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const Text(
                   'Daftar gratis menggunakan email anda.',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
@@ -91,7 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 const Text(
                   'Email',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
                 const SizedBox(height: 8),
                 
@@ -126,7 +126,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 const Text(
                   'Kata Sandi',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
@@ -161,7 +161,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 const Text(
                   'Ulangi Kata Sandi',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
@@ -214,7 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Expanded(
                       child: RichText(
                         text: const TextSpan(
-                          style: TextStyle(fontSize: 14, color: Colors.black87),
+                          style: TextStyle(fontSize: 13, color: Colors.black87),
                           children: [
                             TextSpan(text: 'Saya menyetujui '),
                             TextSpan(
@@ -268,7 +268,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Text(
                     'Daftar',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: _isAgreed ? Colors.white : Colors.black54,
                     ),

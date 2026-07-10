@@ -76,13 +76,13 @@ void _submitForm() {
                 const Text(
                   'Masuk atau Daftar',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
+                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
                 const SizedBox(height: 16),
                 const Text(
                   'Gunakan layanan di bawah ini untuk\nmasuk ke BERITA.IN Digital.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, color: Colors.black87, height: 1.5),
+                  style: TextStyle(fontSize: 14, color: Colors.black87, height: 1.5),
                 ),
                 const SizedBox(height: 32),
 
@@ -106,7 +106,7 @@ void _submitForm() {
                       const SizedBox(width: 12),
                       const Text(
                         'Lanjutkan dengan Google',
-                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16),
+                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 14),
                       ),
                     ],
                   ),
@@ -114,21 +114,21 @@ void _submitForm() {
                 const SizedBox(height: 32),
 
                 const Center(
-                  child: Text('Atau', style: TextStyle(color: Colors.black54, fontSize: 16)),
+                  child: Text('Atau', style: TextStyle(color: Colors.black54, fontSize: 14)),
                 ),
                 const SizedBox(height: 32),
 
                 const Text(
                   'Masuk/Daftar menggunakan email anda',
                   textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 16, color: Colors.black87),
+                  style: TextStyle(fontSize: 14, color: Colors.black87),
                 ),
                 const SizedBox(height: 16),
 
                 const Text(
                   'Email',
                   textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
                 const SizedBox(height: 8),
 

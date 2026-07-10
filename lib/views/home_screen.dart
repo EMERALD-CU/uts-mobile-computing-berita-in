@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Text(
                   'ARTIKEL ${_selectedCategoryIndex == 0 ? "TERBARU" : _categories[_selectedCategoryIndex].toUpperCase()}', 
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black)
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)
                 ),
                 const SizedBox(height: 16),
                 
@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Expanded(
                               child: Text(
                                 article.title,
-                                style: const TextStyle(fontSize: 16, color: Colors.black87, height: 1.4),
+                                style: const TextStyle(fontSize: 14, color: Colors.black87, height: 1.4),
                                 maxLines: 4, 
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -169,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(
                                 _categories[i],
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: _selectedCategoryIndex == i ? FontWeight.bold : FontWeight.normal,
                                   color: _selectedCategoryIndex == i ? AppColors.primaryRed : Colors.black54,
                                 ),
@@ -411,7 +411,7 @@ class NewsSearchDelegate extends SearchDelegate {
                     Expanded(
                       child: Text(
                         article.title,
-                        style: const TextStyle(fontSize: 16, color: Colors.black87, height: 1.4),
+                        style: const TextStyle(fontSize: 14, color: Colors.black87, height: 1.4),
                         maxLines: 4, 
                         overflow: TextOverflow.ellipsis,
                       ),

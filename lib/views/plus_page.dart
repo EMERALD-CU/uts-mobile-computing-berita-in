@@ -147,7 +147,7 @@ class _PlusPageState extends State<PlusPage> {
                           _namaAkun,
                           style: const TextStyle(
                             color: Colors.black87,
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 0.3,
                           ),
@@ -163,7 +163,7 @@ class _PlusPageState extends State<PlusPage> {
                             'Verified Account',
                             style: TextStyle(
                               color: Colors.black87,
-                              fontSize: 11,
+                              fontSize: 9,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -185,7 +185,7 @@ class _PlusPageState extends State<PlusPage> {
                   // --- 2. PREMIUM FEATURES ---
                   const Text(
                     'Premium Features',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black87, letterSpacing: 0.5),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black87, letterSpacing: 0.5),
                   ),
                   const SizedBox(height: 14),
                   Row(
@@ -250,7 +250,7 @@ class _PlusPageState extends State<PlusPage> {
                         const Text(
                           'Punya Perspektif Menarik?',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black87),
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black87),
                         ),
                         const SizedBox(height: 12),
                         
@@ -258,7 +258,7 @@ class _PlusPageState extends State<PlusPage> {
                         const Text(
                           'Jadilah kontributor Berita.in. Bagikan opini Anda dan jangkau ribuan pembaca setia setiap harinya.',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 13, height: 1.5, color: Colors.black54),
+                          style: TextStyle(fontSize: 11, height: 1.5, color: Colors.black54),
                         ),
                         const SizedBox(height: 28),
                         
@@ -300,7 +300,7 @@ class _PlusPageState extends State<PlusPage> {
                       icon: const Icon(Icons.logout_rounded, color: Colors.grey, size: 18),
                       label: const Text(
                         'Keluar dari Akun', 
-                        style: TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500),
+                        style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w500),
                       ),
                     ),
                   ),
@@ -332,7 +332,7 @@ class _PlusPageState extends State<PlusPage> {
           const SizedBox(height: 10),
           Text(
             title,
-            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.black87),
+            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.black87),
           ),
         ],
       ),
