@@ -82,7 +82,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const Text(
                   'Daftar gratis menggunakan email anda.',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
@@ -142,7 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                   decoration: InputDecoration(
-                    hintText: 'Buat kata sandi untuk akun Anda',
+                    hintText: 'Masukkan kata sandi',
                     hintStyle: const TextStyle(color: Colors.black54),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: const BorderSide(color: Colors.black87)),
@@ -177,7 +177,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                   decoration: InputDecoration(
-                    hintText: 'Ulangi kata sandi untuk akun Anda',
+                    hintText: 'Ketik ulang kata sandi',
                     hintStyle: const TextStyle(color: Colors.black54),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(4), borderSide: const BorderSide(color: Colors.black87)),
@@ -214,7 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Expanded(
                       child: RichText(
                         text: const TextSpan(
-                          style: TextStyle(fontSize: 13, color: Colors.black87),
+                          style: TextStyle(fontSize: 14, color: Colors.black87),
                           children: [
                             TextSpan(text: 'Saya menyetujui '),
                             TextSpan(
